@@ -13,5 +13,5 @@ git add .
 git commit -m "🎨 $message"
 
 git push origin $curBranch # 提交代码到github(修改了远程项目名)
-echo -------
+echo ----------------------------
 git push gitee $curBranch # 提交代码到gitee
