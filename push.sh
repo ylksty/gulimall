@@ -12,6 +12,6 @@ curBranch=${result:2} # 去除多余的*
 git add .
 git commit -m "🎨 $message"
 
-git push origin $curBranch # 提交代码到github(修改了远程项目名)
-echo ----------------------------
 git push gitee $curBranch # 提交代码到gitee
+echo ----------------------------
+git push origin $curBranch # 提交代码到github(修改了远程项目名)

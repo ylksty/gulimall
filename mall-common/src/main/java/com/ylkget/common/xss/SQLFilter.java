@@ -8,7 +8,7 @@
 
 package com.ylkget.common.xss;
 
-import io.renren.common.exception.RRException;
+import com.ylkget.common.exception.RRException;
 import org.apache.commons.lang.StringUtils;
 
 /**

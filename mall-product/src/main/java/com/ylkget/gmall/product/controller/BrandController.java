@@ -33,6 +33,9 @@ public class BrandController {
     /**
      * 列表
      */
+    /*
+    http://127.0.0.1:10000/product/brand/list
+     */
     @RequestMapping("/list")
     //@RequiresPermissions("product:brand:list")
     public R list(@RequestParam Map<String, Object> params){
