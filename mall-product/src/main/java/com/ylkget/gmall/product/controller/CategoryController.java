@@ -1,6 +1,7 @@
 package com.ylkget.gmall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,19 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /*
+    查出所有分类以及子分类，以树形结构组装起来
+    http://127.0.0.1:10000/product/category/list/tree
+     */
+    @RequestMapping("/list/tree")
+    public R list(){
+
+        List<CategoryEntity> entities = categoryService.listWithTree();
+
+
+        return R.ok().put("data", entities);
+    }
+
     /**
      * 列表
      */
@@ -50,7 +64,7 @@ public class CategoryController {
     public R info(@PathVariable("catId") Long catId){
 		CategoryEntity category = categoryService.getById(catId);
 
-        return R.ok().put("category", category);
+        return R.ok().put("data", category);
     }
 
     /**
@@ -72,6 +86,13 @@ public class CategoryController {
     public R update(@RequestBody CategoryEntity category){
 		categoryService.updateById(category);
 
+        return R.ok();
+    }
+
+    @RequestMapping("/update/sort")
+    //@RequiresPermissions("product:category:update")
+    public R updateSort(@RequestBody CategoryEntity[] category){
+        categoryService.updateBatchById(Arrays.asList(category));
         return R.ok();
     }
 
