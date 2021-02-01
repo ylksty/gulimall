@@ -63,6 +63,13 @@
         align="center"
         label="品牌logo地址"
       >
+        <template slot-scope="scope">
+          <!-- <el-image
+              style="width: 100px; height: 80px"
+              :src="scope.row.logo"
+          fit="fill"></el-image> -->
+          <img :src="scope.row.logo" style="width: 100px; height: 80px" />
+        </template>
       </el-table-column>
       <el-table-column
         prop="descript"
@@ -75,7 +82,7 @@
         prop="showStatus"
         header-align="center"
         align="center"
-        label="显示状态[0-不显示；1-显示]"
+        label="显示状态"
       >
         <template slot-scope="scope">
           <el-switch
@@ -170,11 +177,17 @@ export default {
   methods: {
     addCatelogSelect() {
       //{"brandId":1,"catelogId":2}
-      this.popCatelogSelectVisible =false;
+      this.popCatelogSelectVisible = false;
       this.$http({
         url: this.$http.adornUrl("/product/categorybrandrelation/save"),
         method: "post",
-        data: this.$http.adornData({brandId:this.brandId,catelogId:this.catelogPath[this.catelogPath.length-1]}, false)
+        data: this.$http.adornData(
+          {
+            brandId: this.brandId,
+            catelogId: this.catelogPath[this.catelogPath.length - 1],
+          },
+          false
+        ),
       }).then(({ data }) => {
         this.getCateRelation();
       });
@@ -183,7 +196,7 @@ export default {
       this.$http({
         url: this.$http.adornUrl("/product/categorybrandrelation/delete"),
         method: "post",
-        data: this.$http.adornData([id], false)
+        data: this.$http.adornData([id], false),
       }).then(({ data }) => {
         this.getCateRelation();
       });
@@ -198,8 +211,8 @@ export default {
         url: this.$http.adornUrl("/product/categorybrandrelation/catelog/list"),
         method: "get",
         params: this.$http.adornParams({
-          brandId: this.brandId
-        })
+          brandId: this.brandId,
+        }),
       }).then(({ data }) => {
         this.cateRelationTableData = data.data;
       });
@@ -233,11 +246,11 @@ export default {
       this.$http({
         url: this.$http.adornUrl("/product/brand/update/status"),
         method: "post",
-        data: this.$http.adornData({ brandId, showStatus }, false)
+        data: this.$http.adornData({ brandId, showStatus }, false),
       }).then(({ data }) => {
         this.$message({
           type: "success",
-          message: "状态更新成功"
+          message: "状态更新成功",
         });
       });
     },
