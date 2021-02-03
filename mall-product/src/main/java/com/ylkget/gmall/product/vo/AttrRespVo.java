@@ -1,9 +1,7 @@
 package com.ylkget.gmall.product.vo;
 
 import lombok.Data;
-/**
- * @author joe 2021-02-03 00
- */
+
 @Data
 public class AttrRespVo extends AttrVo {
     /**
@@ -15,4 +13,3 @@ public class AttrRespVo extends AttrVo {
 
     private Long[] catelogPath;
 }
-

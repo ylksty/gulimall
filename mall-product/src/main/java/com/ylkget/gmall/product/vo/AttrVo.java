@@ -1,10 +1,8 @@
 package com.ylkget.gmall.product.vo;
 
+
 import lombok.Data;
 
-/**
- * @author joe 2021-02-02 23
- */
 @Data
 public class AttrVo {
     /**
@@ -20,6 +18,10 @@ public class AttrVo {
      */
     private Integer searchType;
     /**
+     * 值类型[0-为单个值，1-可以选择多个值]
+     */
+    private Integer valueType;
+    /**
      * 属性图标
      */
     private String icon;
@@ -28,7 +30,7 @@ public class AttrVo {
      */
     private String valueSelect;
     /**
-     * 属性类型[0-销售属性，1-基本属性
+     * 属性类型[0-销售属性，1-基本属性，2-既是销售属性又是基本属性]
      */
     private Integer attrType;
     /**
