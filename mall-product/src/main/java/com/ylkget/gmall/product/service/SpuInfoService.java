@@ -3,6 +3,7 @@ package com.ylkget.gmall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ylkget.common.utils.PageUtils;
 import com.ylkget.gmall.product.entity.SpuInfoEntity;
+import com.ylkget.gmall.product.vo.SpuSaveVo;
 
 import java.util.Map;
 
@@ -16,5 +17,11 @@ import java.util.Map;
 public interface SpuInfoService extends IService<SpuInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveSpuInfo(SpuSaveVo vo);
+
+    void saveBaseSpuInfo(SpuInfoEntity infoEntity);
+
+    PageUtils queryPageByCondition(Map<String, Object> params);
 }
 

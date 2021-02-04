@@ -11,6 +11,13 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
+        - id: coupon_route
+          uri: lb://server-coupon
+          predicates:
+            - Path=/api/coupon/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
         - id: third-party
           uri: lb://server-third-party
           predicates:
@@ -22,6 +29,20 @@ spring:
           uri: lb://server-member
           predicates:
             - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: ware_route
+          uri: lb://server-ware
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+        - id: order_route
+          uri: lb://server-order
+          predicates:
+            - Path=/api/order/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 

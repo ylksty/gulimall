@@ -3,6 +3,7 @@ package com.ylkget.gmall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ylkget.common.utils.PageUtils;
 import com.ylkget.gmall.product.entity.AttrGroupEntity;
+import com.ylkget.gmall.product.vo.AttrGroupWithAttrsVo;
 
 import java.util.List;
 import java.util.Map;

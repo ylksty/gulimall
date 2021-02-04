@@ -2,6 +2,7 @@ package com.ylkget.gmall.product.service.impl;
 
 import com.ylkget.gmall.product.entity.AttrEntity;
 import com.ylkget.gmall.product.service.AttrService;
+import com.ylkget.gmall.product.vo.AttrGroupWithAttrsVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

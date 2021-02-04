@@ -9,6 +9,7 @@ import com.ylkget.gmall.product.service.AttrAttrgroupRelationService;
 import com.ylkget.gmall.product.service.AttrService;
 import com.ylkget.gmall.product.service.CategoryService;
 import com.ylkget.gmall.product.vo.AttrGroupRelationVo;
+import com.ylkget.gmall.product.vo.AttrGroupWithAttrsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
