@@ -55,9 +55,9 @@ spring:
 
 
         - id: gmall_host_route
-          uri: lb://gmall-product
+          uri: lb://server-product
           predicates:
-            - Host=gmall.com,item.gmall.com
+            - Host=gmall.cn,gmall.com,item.gmall.com
 
         - id: gmall_search_route
           uri: lb://server-search
