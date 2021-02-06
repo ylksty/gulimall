@@ -32,134 +32,160 @@ import java.io.IOException;
 @SpringBootTest
 class SearchApplicationTests {
 
-	@Autowired
-	RestHighLevelClient client;
+    @Autowired
+    RestHighLevelClient client;
 
 
-	@ToString
-	@Data
-	static class  Accout {
+    @ToString
+    @Data
+    static class Accout {
 
-		private int account_number;
-		private int balance;
-		private String firstname;
-		private String lastname;
-		private int age;
-		private String gender;
-		private String address;
-		private String employer;
-		private String email;
-		private String city;
-		private String state;
+        private int account_number;
+        private int balance;
+        private String firstname;
+        private String lastname;
+        private int age;
+        private String gender;
+        private String address;
+        private String employer;
+        private String email;
+        private String city;
+        private String state;
 
+    }
+
+	/*
+	 GET bank/_search
+	 {
+		"query":{
+			"match":{
+				"address":{
+					"query":"mill"
+				}
+			}
+		},
+		"aggregations":{
+			"ageAgg":{
+				"terms":{
+					"field":"age",
+					"size":10
+				}
+			},
+			"balanceAvg":{
+				"avg":{
+					"field":"balance"
+				}
+			}
+		}
 	}
+	 */
 
-	@Test
-	public void searchData() throws IOException {
-		//1、创建检索请求
-		SearchRequest searchRequest = new SearchRequest();
-		//指定索引
-		searchRequest.indices("bank");
-		//指定DSL，检索条件
-		//SearchSourceBuilder sourceBuilde 封装的条件
-		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-		//1.1）、构造检索条件
+    @Test
+    public void searchData() throws IOException {
+        //1、创建检索请求
+        SearchRequest searchRequest = new SearchRequest();
+        //指定索引
+        searchRequest.indices("bank");
+        //指定DSL，检索条件
+        //SearchSourceBuilder sourceBuilde 封装的条件
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        //1.1）、构造检索条件
 //        sourceBuilder.query();
 //        sourceBuilder.from();
 //        sourceBuilder.size();
 //        sourceBuilder.aggregation()
-		sourceBuilder.query(QueryBuilders.matchQuery("address","mill"));
+        sourceBuilder.query(QueryBuilders.matchQuery("address", "mill"));
 
-		//1.2）、按照年龄的值分布进行聚合
-		TermsAggregationBuilder ageAgg = AggregationBuilders.terms("ageAgg").field("age").size(10);
-		sourceBuilder.aggregation(ageAgg);
+        //1.2）、按照年龄的值分布进行聚合
+        TermsAggregationBuilder ageAgg = AggregationBuilders.terms("ageAgg").field("age").size(10);
+        sourceBuilder.aggregation(ageAgg);
 
-		//1.3）、计算平均薪资
-		AvgAggregationBuilder balanceAvg = AggregationBuilders.avg("balanceAvg").field("balance");
-		sourceBuilder.aggregation(balanceAvg);
+        //1.3）、计算平均薪资
+        AvgAggregationBuilder balanceAvg = AggregationBuilders.avg("balanceAvg").field("balance");
+        sourceBuilder.aggregation(balanceAvg);
 
-		System.out.println("检索条件"+sourceBuilder.toString());
-		searchRequest.source(sourceBuilder);
+        System.out.println("检索条件" + sourceBuilder.toString());
+        searchRequest.source(sourceBuilder);
 
 
-		//2、执行检索；
-		SearchResponse searchResponse = client.search(searchRequest, GulimallElasticSearchConfig.COMMON_OPTIONS);
+        //2、执行检索；
+        SearchResponse searchResponse = client.search(searchRequest, GulimallElasticSearchConfig.COMMON_OPTIONS);
 
-		//3、分析结果 searchResponse
-		System.out.println(searchResponse.toString());
+        //3、分析结果 searchResponse
+        System.out.println(searchResponse.toString());
 //        Map map = JSON.parseObject(searchResponse.toString(), Map.class);
-		//3.1）、获取所有查到的数据
-		SearchHits hits = searchResponse.getHits();
-		SearchHit[] searchHits = hits.getHits();
-		for (SearchHit hit : searchHits) {
-			/**
-			 * "_index": "bank",
-			 * 			"_type": "account",
-			 * 			"_id": "345",
-			 * 			"_score": 5.4032025,
-			 * 			"_source":
-			 */
+        //3.1）、获取所有查到的数据
+        SearchHits hits = searchResponse.getHits();
+        SearchHit[] searchHits = hits.getHits();
+        for (SearchHit hit : searchHits) {
+            /**
+             * "_index": "bank",
+             * 			"_type": "account",
+             * 			"_id": "345",
+             * 			"_score": 5.4032025,
+             * 			"_source":
+             */
 //            hit.getIndex();hit.getType();hit.getId();
-			String string = hit.getSourceAsString();
-			Accout accout = JSON.parseObject(string, Accout.class);
-			System.out.println("accout："+accout);
-		}
+            String string = hit.getSourceAsString();
+            Accout accout = JSON.parseObject(string, Accout.class);
+            System.out.println("accout：" + accout);
+        }
 
-		//3.2）、获取这次检索到的分析信息；
-		Aggregations aggregations = searchResponse.getAggregations();
+        //3.2）、获取这次检索到的分析信息；
+        Aggregations aggregations = searchResponse.getAggregations();
 //        for (Aggregation aggregation : aggregations.asList()) {
 //            System.out.println("当前聚合："+aggregation.getName());
 ////            aggregation.get
 //
 //        }
-		Terms ageAgg1 = aggregations.get("ageAgg");
-		for (Terms.Bucket bucket : ageAgg1.getBuckets()) {
-			String keyAsString = bucket.getKeyAsString();
-			System.out.println("年龄："+keyAsString+"==>"+bucket.getDocCount());
-		}
+        Terms ageAgg1 = aggregations.get("ageAgg");
+        for (Terms.Bucket bucket : ageAgg1.getBuckets()) {
+            String keyAsString = bucket.getKeyAsString();
+            System.out.println("年龄：" + keyAsString + "==>" + bucket.getDocCount());
+        }
 
-		Avg balanceAvg1 = aggregations.get("balanceAvg");
-		System.out.println("平均薪资："+balanceAvg1.getValue());
+        Avg balanceAvg1 = aggregations.get("balanceAvg");
+        System.out.println("平均薪资：" + balanceAvg1.getValue());
 
 //        Aggregation balanceAvg2 = aggregations.get("balanceAvg");
 
 
-	}
+    }
 
-	/**
-	 * 测试存储数据到es
-	 * 更新也可以
-	 */
-	@Test
-	public void indexData() throws IOException {
-		IndexRequest indexRequest = new IndexRequest("users");
-		indexRequest.id("1");//数据的id
+    /**
+     * 测试存储数据到es
+     * 更新也可以
+     */
+    @Test
+    public void indexData() throws IOException {
+        IndexRequest indexRequest = new IndexRequest("users");
+        indexRequest.id("1");//数据的id
 //        indexRequest.source("userName","zhangsan","age",18,"gender","男");
-		User user = new User();
-		user.setUserName("zhangsan");
-		user.setAge(18);
-		user.setGender("男");
-		String jsonString = JSON.toJSONString(user);
-		indexRequest.source(jsonString, XContentType.JSON);//要保存的内容
+        User user = new User();
+        user.setUserName("zhangsan");
+        user.setAge(18);
+        user.setGender("男");
+        String jsonString = JSON.toJSONString(user);
+        indexRequest.source(jsonString, XContentType.JSON);//要保存的内容
 
 
-		//执行操作
-		IndexResponse index = client.index(indexRequest, GulimallElasticSearchConfig.COMMON_OPTIONS);
+        //执行操作
+        IndexResponse index = client.index(indexRequest, GulimallElasticSearchConfig.COMMON_OPTIONS);
 
-		//提取有用的响应数据
-		System.out.println(index);
-	}
+        //提取有用的响应数据
+        System.out.println(index);
+    }
 
-	@Data
-	class User{
-		private String userName;
-		private String gender;
-		private Integer age;
+    @Data
+    class User {
+        private String userName;
+        private String gender;
+        private Integer age;
 
-	}
+    }
 
-	@Test
-	void contextLoads() {
-		System.out.println(client);
-	}
+    @Test
+    void contextLoads() {
+        System.out.println(client);
+    }
 }

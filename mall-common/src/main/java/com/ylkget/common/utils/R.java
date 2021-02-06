@@ -8,6 +8,8 @@
 
 package com.ylkget.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
@@ -64,5 +66,17 @@ public class R extends HashMap<String, Object> {
 
 	public Integer getCode() {
 		return (Integer) this.get("code");
+	}
+
+    public R setData(Object data) {
+		put("data",data);
+		return this;
+    }
+
+	public <T> T getData(TypeReference<T> typeReference) {
+		Object data = get("data");//默认是map
+		String s = JSON.toJSONString(data);
+		T t = JSON.parseObject(s, typeReference);
+		return t;
 	}
 }

@@ -53,6 +53,42 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
 
+
+        - id: gmall_host_route
+          uri: lb://gmall-product
+          predicates:
+            - Host=gmall.com,item.gmall.com
+
+        - id: gmall_search_route
+          uri: lb://server-search
+          predicates:
+            - Host=search.gmall.com
+
+        - id: gmall_auth_route
+          uri: lb://gmall-auth-server
+          predicates:
+            - Host=auth.gmall.com
+
+        - id: gmall_cart_route
+          uri: lb://gmall-cart
+          predicates:
+            - Host=cart.gmall.com
+
+        - id: gmall_order_route
+          uri: lb://gmall-order
+          predicates:
+            - Host=order.gmall.com
+
+        - id: gmall_member_route
+          uri: lb://gmall-member
+          predicates:
+            - Host=member.gmall.com
+
+        - id: gmall_seckill_route
+          uri: lb://gmall-seckill
+          predicates:
+            - Host=seckill.gmall.com
+
   ## 前端项目，/api
   ## http://localhost:88/api/captcha.jpg   http://localhost:8080/renren-fast/captcha.jpg
   ## http://localhost:88/api/product/category/list/tree http://localhost:10000/product/category/list/tree
