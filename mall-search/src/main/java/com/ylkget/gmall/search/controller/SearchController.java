@@ -29,7 +29,6 @@ public class SearchController {
      */
     @GetMapping("/list.html")
     public String listPage(SearchParam param, Model model, HttpServletRequest request){
-        System.out.println("aaa");
 
         param.set_queryString(request.getQueryString());
         //1、根据传递来的页面的查询参数，去es中检索商品

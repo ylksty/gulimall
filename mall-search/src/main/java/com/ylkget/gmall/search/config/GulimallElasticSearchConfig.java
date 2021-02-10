@@ -27,16 +27,17 @@ public class GulimallElasticSearchConfig {
     }
 
     @Bean
-    public RestHighLevelClient esRestClient(){
+    public RestHighLevelClient esRestClient(@Value("${spring.elasticsearch.jest.uris}")String esUrl){
 
         //TODO 修改为线上的地址
         RestClientBuilder builder = null;
         //final String hostname, final int port, final String scheme
 
-        builder = RestClient.builder(new HttpHost("192.168.31.155", 9200, "http"));
-        RestHighLevelClient client = new RestHighLevelClient(builder);
+//        builder = RestClient.builder(new HttpHost("192.168.0.102", 9200, "http"));
+//        RestHighLevelClient client = new RestHighLevelClient(builder);
 
-//        builder = RestClient.builder(HttpHost.create(esUrl));
+        builder = RestClient.builder(HttpHost.create(esUrl));
+        RestHighLevelClient client = new RestHighLevelClient(builder);
 
 //        RestHighLevelClient client = new RestHighLevelClient(
 //                RestClient.builder(
