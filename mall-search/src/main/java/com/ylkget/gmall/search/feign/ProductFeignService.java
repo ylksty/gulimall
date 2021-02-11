@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author joe 2021-02-08 18:54
  */
-@FeignClient("gmall-product")
+@FeignClient("server-product")
 public interface ProductFeignService {
 
 
