@@ -3,6 +3,7 @@ package com.ylkget.gmall.product.service.impl;
 import com.ylkget.gmall.product.entity.AttrEntity;
 import com.ylkget.gmall.product.service.AttrService;
 import com.ylkget.gmall.product.vo.AttrGroupWithAttrsVo;
+import com.ylkget.gmall.product.vo.SpuItemAttrGroupVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -86,5 +87,15 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
 
 
     }
+
+    @Override
+    public List<SpuItemAttrGroupVo> getAttrGroupWithAttrsBySpuId(Long spuId, Long catalogId) {
+        //1、查出当前spu对应的所有属性的分组信息以及当前分组下的所有属性对应的值
+        //1）、
+        AttrGroupDao baseMapper = this.getBaseMapper();
+        List<SpuItemAttrGroupVo> vos = baseMapper.getAttrGroupWithAttrsBySpuId(spuId,catalogId);
+        return vos;
+    }
+
 
 }

@@ -367,7 +367,7 @@ public class MallSearchServiceImpl implements MallSearchService {
                 //拿到所有的查询条件，去掉当前。
                 //attrs=  15_海思（Hisilicon）
                 String replace = replaceQueryString(param, attr,"attrs");
-                navVo.setLink("http://search.gulimall.com/list.html?"+replace);
+                navVo.setLink("http://search.gmall.com/list.html?"+replace);
 
                 return navVo;
             }).collect(Collectors.toList());
