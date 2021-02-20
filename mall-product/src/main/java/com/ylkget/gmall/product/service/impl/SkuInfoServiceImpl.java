@@ -41,8 +41,8 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     AttrGroupService attrGroupService;
     @Autowired
     SkuImagesService imagesService;
-    @Autowired
-    SeckillFeignService seckillFeignService;
+//    @Autowired
+//    SeckillFeignService seckillFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -167,19 +167,20 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         }, executor);
 
         //3、查询当前sku是否参与秒杀优惠
-        CompletableFuture<Void> secKillFuture = CompletableFuture.runAsync(() -> {
-            R seckillInfo = seckillFeignService.getSkuSeckillInfo(skuId);
-            if (seckillInfo.getCode() == 0) {
-                SeckillInfoVo seckillInfoVo = seckillInfo.getData(new TypeReference<SeckillInfoVo>() {
-                });
-                skuItemVo.setSeckillInfo(seckillInfoVo);
-            }
-        }, executor);
+//        CompletableFuture<Void> secKillFuture = CompletableFuture.runAsync(() -> {
+//            R seckillInfo = seckillFeignService.getSkuSeckillInfo(skuId);
+//            if (seckillInfo.getCode() == 0) {
+//                SeckillInfoVo seckillInfoVo = seckillInfo.getData(new TypeReference<SeckillInfoVo>() {
+//                });
+//                skuItemVo.setSeckillInfo(seckillInfoVo);
+//            }
+//        }, executor);
 
 
 
         //等到所有任务都完成
-        CompletableFuture.allOf(saleAttrFuture,descFuture,baseAttrFuture,imageFuture,secKillFuture).get();
+//        CompletableFuture.allOf(saleAttrFuture,descFuture,baseAttrFuture,imageFuture,secKillFuture).get();
+        CompletableFuture.allOf(saleAttrFuture,descFuture,baseAttrFuture,imageFuture).get();
 
 
         return skuItemVo;

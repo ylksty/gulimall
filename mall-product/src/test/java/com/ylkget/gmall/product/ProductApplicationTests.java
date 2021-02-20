@@ -1,8 +1,10 @@
 package com.ylkget.gmall.product;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.ylkget.gmall.product.dao.AttrGroupDao;
 import com.ylkget.gmall.product.entity.BrandEntity;
 import com.ylkget.gmall.product.service.BrandService;
+import com.ylkget.gmall.product.vo.SpuItemAttrGroupVo;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.redisson.api.RedissonClient;
@@ -12,6 +14,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.UUID;
 
 @RunWith(SpringRunner.class)
@@ -24,6 +27,17 @@ class ProductApplicationTests {
 	StringRedisTemplate stringRedisTemplate;
 	@Autowired
 	RedissonClient redissonClient;
+
+	@Autowired
+	AttrGroupDao attrGroupDao;
+
+	@Test
+	public void test(){
+        List<SpuItemAttrGroupVo> attrGroupWithAttrsBySpuId = attrGroupDao.getAttrGroupWithAttrsBySpuId(100L, 225L);
+        System.out.println(attrGroupWithAttrsBySpuId);
+//		List<SkuItemSaleAttrVo> saleAttrsBySpuId = skuSaleAttrValueDao.getSaleAttrsBySpuId(13L);
+//		System.out.println(saleAttrsBySpuId);
+	}
 
 	@Test
 	void contextLoads() {

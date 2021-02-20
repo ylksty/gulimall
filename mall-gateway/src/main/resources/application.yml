@@ -85,7 +85,7 @@ spring:
             - Host=member.gmall.com
 
         - id: gmall_seckill_route
-          uri: lb://gmall-seckill
+          uri: lb://server-seckill
           predicates:
             - Host=seckill.gmall.com
 
