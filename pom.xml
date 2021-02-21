@@ -19,6 +19,7 @@
         <module>mall-product</module>
         <module>mall-ware</module>
         <module>mall-order</module>
+        <module>gmall-auth-server</module>
 
     </modules>
 

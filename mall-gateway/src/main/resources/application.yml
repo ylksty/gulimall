@@ -65,7 +65,7 @@ spring:
             - Host=search.gmall.com
 
         - id: gmall_auth_route
-          uri: lb://gmall-auth-server
+          uri: lb://server-auth
           predicates:
             - Host=auth.gmall.com
 
