@@ -3,6 +3,10 @@ package com.ylkget.gmall.member.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ylkget.common.utils.PageUtils;
 import com.ylkget.gmall.member.entity.MemberEntity;
+import com.ylkget.gmall.member.excepiton.UsernameExistException;
+import com.ylkget.gmall.member.exception.PhoneExsitException;
+import com.ylkget.gmall.member.vo.MemberLoginVo;
+import com.ylkget.gmall.member.vo.MemberRegistVo;
 
 import java.util.Map;
 
@@ -16,5 +20,13 @@ import java.util.Map;
 public interface MemberService extends IService<MemberEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void regist(MemberRegistVo vo);
+
+    void checkPhoneUnique(String phone) throws PhoneExsitException;
+
+    void checkUsernameUnique(String username) throws UsernameExistException;
+
+    MemberEntity login(MemberLoginVo vo);
 }
 

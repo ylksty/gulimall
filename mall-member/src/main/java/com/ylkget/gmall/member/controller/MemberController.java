@@ -3,13 +3,12 @@ package com.ylkget.gmall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.ylkget.common.exception.BizCodeEnume;
 import com.ylkget.gmall.member.feign.CouponFeignService;
+import com.ylkget.gmall.member.vo.MemberLoginVo;
+import com.ylkget.gmall.member.vo.MemberRegistVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ylkget.gmall.member.entity.MemberEntity;
 import com.ylkget.gmall.member.service.MemberService;
@@ -47,6 +46,26 @@ public class MemberController {
         R memberCoupons = couponFeignService.memberCoupons();
         return R.ok().put("member", memberEntity).put("coupons", memberCoupons.get("coupons"));
     }
+
+    @PostMapping("/login")
+    public R login(@RequestBody MemberLoginVo vo){
+
+        MemberEntity entity =  memberService.login(vo);
+        if(entity!=null){
+            return R.ok().setData(entity);
+        }else{
+            return R.error(BizCodeEnume.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getCode(),BizCodeEnume.LOGINACCT_PASSWORD_INVAILD_EXCEPTION.getMsg());
+        }
+    }
+
+    @PostMapping("/regist")
+    public R regist(@RequestBody MemberRegistVo vo){
+
+        memberService.regist(vo);
+
+        return R.ok();
+    }
+
     /**
      * 列表
      */
