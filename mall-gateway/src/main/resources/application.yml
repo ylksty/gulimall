@@ -70,7 +70,7 @@ spring:
             - Host=auth.gmall.com
 
         - id: gmall_cart_route
-          uri: lb://gmall-cart
+          uri: lb://server-cart
           predicates:
             - Host=cart.gmall.com
 
