@@ -75,12 +75,12 @@ spring:
             - Host=cart.gmall.com
 
         - id: gmall_order_route
-          uri: lb://gmall-order
+          uri: lb://server-order
           predicates:
             - Host=order.gmall.com
 
         - id: gmall_member_route
-          uri: lb://gmall-member
+          uri: lb://server-member
           predicates:
             - Host=member.gmall.com
 
