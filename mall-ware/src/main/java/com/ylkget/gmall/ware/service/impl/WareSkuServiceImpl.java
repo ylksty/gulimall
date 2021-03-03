@@ -34,6 +34,7 @@ import com.ylkget.common.utils.Query;
 import com.ylkget.gmall.ware.dao.WareSkuDao;
 import com.ylkget.gmall.ware.entity.WareSkuEntity;
 import com.ylkget.gmall.ware.service.WareSkuService;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("wareSkuService")
@@ -111,6 +112,22 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         return collect;
     }
 
+    /**
+     * 为某个订单锁定库存
+     * <p>
+     * (rollbackFor = NoStockException.class)
+     * 默认只要是运行时异常都会回滚
+     *
+     * @param vo 库存解锁的场景
+     *           1）、下订单成功，订单过期没有支付被系统自动取消、被用户手动取消。都要解锁库存
+     *           <p>
+     *           <p>
+     *           2）、下订单成功，库存锁定成功，接下来的业务调用失败，导致订单回滚。
+     *           之前锁定的库存就要自动解锁。
+     *
+     * @return
+     */
+    @Transactional
     @Override
     public Boolean orderLockStock(WareSkuLockVo vo) {
         /**
